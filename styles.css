@@ -543,13 +543,24 @@ a {
 }
 
 @media (max-width: 760px) {
+  html,
   body {
+    min-height: 100vh;
+  }
+
+  body {
+    display: block;
+    overflow: auto;
     padding: 10px;
+    width: max-content;
+    min-width: calc(100vw - 20px);
   }
 
   .window {
-    max-width: calc(100vw - 20px);
-    overflow: auto;
+    width: max-content;
+    min-width: max-content;
+    max-width: none;
+    overflow: visible;
   }
 
   .window.is-maximized {
