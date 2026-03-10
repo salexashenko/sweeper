@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minesweeper</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='3' fill='%23000'/%3E%3Crect x='7' y='1' width='2' height='4' fill='%23000'/%3E%3Crect x='7' y='11' width='2' height='4' fill='%23000'/%3E%3Crect x='1' y='7' width='4' height='2' fill='%23000'/%3E%3Crect x='11' y='7' width='4' height='2' fill='%23000'/%3E%3Ccircle cx='6.5' cy='6.5' r='1' fill='%23fff'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="window" aria-label="Minesweeper window">
+      <header class="title-bar">
+        <div class="title-group">
+          <span class="app-icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" width="12" height="12">
+              <circle cx="8" cy="8" r="3" fill="#000000" />
+              <rect x="7" y="1" width="2" height="4" fill="#000000" />
+              <rect x="7" y="11" width="2" height="4" fill="#000000" />
+              <rect x="1" y="7" width="4" height="2" fill="#000000" />
+              <rect x="11" y="7" width="4" height="2" fill="#000000" />
+              <rect x="2" y="2" width="2" height="2" transform="rotate(-45 3 3)" fill="#000000" />
+              <rect x="12" y="2" width="2" height="2" transform="rotate(45 13 3)" fill="#000000" />
+              <rect x="2" y="12" width="2" height="2" transform="rotate(45 3 13)" fill="#000000" />
+              <rect x="12" y="12" width="2" height="2" transform="rotate(-45 13 13)" fill="#000000" />
+              <circle cx="6.5" cy="6.5" r="1" fill="#ffffff" />
+            </svg>
+          </span>
+          <span class="title-text">Minesweeper</span>
+        </div>
+        <div class="window-controls" aria-hidden="true">
+          <span class="window-control">_</span>
+          <span class="window-control">[]</span>
+          <span class="window-control">X</span>
+        </div>
+      </header>
+
+      <nav class="menu-bar" aria-label="Menu">
+        <div class="menu-group">
+          <button
+            class="menu-item"
+            id="menu-game"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="game-menu"
+          >
+            <u>G</u>ame
+          </button>
+          <div class="menu-popup" id="game-menu" role="menu" hidden>
+            <button class="menu-popup-item" id="menu-new" type="button" role="menuitem">
+              <u>N</u>ew
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-group">
+          <button
+            class="menu-item"
+            id="menu-help"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="help-menu"
+          >
+            <u>H</u>elp
+          </button>
+          <div class="menu-popup" id="help-menu" role="menu" hidden>
+            <button class="menu-popup-item" id="menu-help-how" type="button" role="menuitem">
+              <u>H</u>ow To Play
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <section class="game-shell">
+        <div class="hud">
+          <div class="counter" id="mine-counter" aria-label="Mines remaining"></div>
+          <button class="face-button" id="reset-button" type="button" aria-label="Start a new game"></button>
+          <div class="counter" id="timer-counter" aria-label="Elapsed seconds"></div>
+        </div>
+
+        <div class="board-frame">
+          <div class="board" id="board" role="grid" aria-label="Strait of Hormuz minefield"></div>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="help-dialog" id="help-dialog">
+      <form method="dialog" class="help-panel">
+        <h1>How To Play</h1>
+        <p>Left click reveals a tile.</p>
+        <p>Right click cycles flag, question mark, and clear.</p>
+        <p>Click a revealed number to chord once the surrounding flags match it.</p>
+        <p>The playable field follows the Strait of Hormuz and nearby water.</p>
+        <button class="dialog-button" type="submit">OK</button>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
