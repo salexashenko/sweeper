@@ -38,6 +38,10 @@ button {
   font: inherit;
 }
 
+a {
+  color: inherit;
+}
+
 .window {
   background: var(--chrome);
   border-top: 2px solid var(--chrome-light);
@@ -45,6 +49,34 @@ button {
   border-right: 2px solid #000000;
   border-bottom: 2px solid #000000;
   box-shadow: inset -1px -1px 0 var(--chrome-dark), inset 1px 1px 0 #dfdfdf;
+}
+
+.window.is-minimized .menu-bar,
+.window.is-minimized .game-shell {
+  display: none;
+}
+
+.window.is-maximized {
+  position: fixed;
+  inset: 8px;
+  width: auto;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+}
+
+.window.is-maximized .game-shell {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.window.is-maximized .board-frame {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
 }
 
 .title-bar {
@@ -87,6 +119,7 @@ button {
 .window-control {
   width: 16px;
   height: 14px;
+  padding: 0;
   background: var(--chrome);
   color: #000000;
   display: grid;
@@ -98,6 +131,12 @@ button {
   box-shadow: inset -1px -1px 0 var(--chrome-dark), inset 1px 1px 0 #dfdfdf;
   font-size: 9px;
   line-height: 1;
+  cursor: pointer;
+}
+
+.window-control:focus-visible {
+  outline: 1px dotted #000000;
+  outline-offset: -3px;
 }
 
 .menu-bar {
@@ -433,6 +472,19 @@ button {
   line-height: 1.3;
 }
 
+.help-credit {
+  margin-top: 10px;
+}
+
+.help-link {
+  color: var(--title-blue);
+}
+
+.help-link:hover,
+.help-link:focus-visible {
+  text-decoration: underline;
+}
+
 .dialog-button {
   margin-top: 6px;
   min-width: 72px;
@@ -446,6 +498,50 @@ button {
   box-shadow: inset -1px -1px 0 var(--chrome-dark), inset 1px 1px 0 #dfdfdf;
 }
 
+.desktop-shortcut {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 74px;
+  padding: 6px 4px;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.desktop-shortcut[hidden] {
+  display: none;
+}
+
+.desktop-shortcut:focus-visible,
+.desktop-shortcut:hover {
+  background: rgba(255, 255, 255, 0.16);
+  outline: 1px dotted #ffffff;
+  outline-offset: 2px;
+}
+
+.desktop-shortcut-icon {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: var(--chrome);
+  border-top: 2px solid var(--chrome-light);
+  border-left: 2px solid var(--chrome-light);
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  box-shadow: inset -1px -1px 0 var(--chrome-dark), inset 1px 1px 0 #dfdfdf;
+}
+
+.desktop-shortcut-label {
+  line-height: 1.2;
+  text-shadow: 1px 1px 0 #000000;
+}
+
 @media (max-width: 760px) {
   body {
     padding: 10px;
@@ -454,5 +550,9 @@ button {
   .window {
     max-width: calc(100vw - 20px);
     overflow: auto;
+  }
+
+  .window.is-maximized {
+    inset: 4px;
   }
 }

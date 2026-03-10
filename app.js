@@ -60,10 +60,15 @@ const DIGIT_SEGMENTS = {
   "-": ["g"],
 };
 
+const windowEl = document.getElementById("app-window");
+const desktopShortcutEl = document.getElementById("desktop-shortcut");
 const boardEl = document.getElementById("board");
 const mineCounterEl = document.getElementById("mine-counter");
 const timerCounterEl = document.getElementById("timer-counter");
 const resetButtonEl = document.getElementById("reset-button");
+const minimizeWindowEl = document.getElementById("window-minimize");
+const maximizeWindowEl = document.getElementById("window-maximize");
+const closeWindowEl = document.getElementById("window-close");
 const gameMenuEl = document.getElementById("menu-game");
 const gameMenuPopupEl = document.getElementById("game-menu");
 const newGameMenuItemEl = document.getElementById("menu-new");
@@ -612,6 +617,51 @@ function toggleMenu(menuName) {
   openMenu(menuName);
 }
 
+function syncWindowControls() {
+  maximizeWindowEl.textContent = windowEl.classList.contains("is-maximized") ? "]["
+    : "[]";
+  maximizeWindowEl.setAttribute(
+    "aria-label",
+    windowEl.classList.contains("is-maximized") ? "Restore" : "Maximize",
+  );
+}
+
+function restoreWindow() {
+  windowEl.hidden = false;
+  windowEl.classList.remove("is-minimized");
+  desktopShortcutEl.hidden = true;
+  syncWindowControls();
+}
+
+function minimizeWindow() {
+  closeMenus();
+  if (helpDialogEl.open) {
+    helpDialogEl.close();
+  }
+
+  windowEl.hidden = false;
+  windowEl.classList.toggle("is-minimized");
+}
+
+function toggleMaximizeWindow() {
+  closeMenus();
+  restoreWindow();
+  windowEl.classList.toggle("is-maximized");
+  syncWindowControls();
+}
+
+function closeWindow() {
+  closeMenus();
+  if (helpDialogEl.open) {
+    helpDialogEl.close();
+  }
+
+  windowEl.hidden = true;
+  windowEl.classList.remove("is-minimized");
+  desktopShortcutEl.hidden = false;
+  desktopShortcutEl.focus();
+}
+
 boardEl.addEventListener("contextmenu", (event) => {
   event.preventDefault();
 });
@@ -626,6 +676,10 @@ window.addEventListener("pointerup", () => {
 });
 
 resetButtonEl.addEventListener("click", resetGame);
+minimizeWindowEl.addEventListener("click", minimizeWindow);
+maximizeWindowEl.addEventListener("click", toggleMaximizeWindow);
+closeWindowEl.addEventListener("click", closeWindow);
+desktopShortcutEl.addEventListener("click", restoreWindow);
 
 gameMenuEl.addEventListener("click", (event) => {
   event.stopPropagation();
@@ -663,4 +717,5 @@ window.addEventListener("keydown", (event) => {
 
 helpDialogEl.addEventListener("close", closeMenus);
 
+syncWindowControls();
 resetGame();

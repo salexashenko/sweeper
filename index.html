@@ -11,7 +11,25 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="window" aria-label="Minesweeper window">
+    <button class="desktop-shortcut" id="desktop-shortcut" type="button" hidden>
+      <span class="desktop-shortcut-icon" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="16" height="16">
+          <circle cx="8" cy="8" r="3" fill="#000000" />
+          <rect x="7" y="1" width="2" height="4" fill="#000000" />
+          <rect x="7" y="11" width="2" height="4" fill="#000000" />
+          <rect x="1" y="7" width="4" height="2" fill="#000000" />
+          <rect x="11" y="7" width="4" height="2" fill="#000000" />
+          <rect x="2" y="2" width="2" height="2" transform="rotate(-45 3 3)" fill="#000000" />
+          <rect x="12" y="2" width="2" height="2" transform="rotate(45 13 3)" fill="#000000" />
+          <rect x="2" y="12" width="2" height="2" transform="rotate(45 3 13)" fill="#000000" />
+          <rect x="12" y="12" width="2" height="2" transform="rotate(-45 13 13)" fill="#000000" />
+          <circle cx="6.5" cy="6.5" r="1" fill="#ffffff" />
+        </svg>
+      </span>
+      <span class="desktop-shortcut-label">Minesweeper</span>
+    </button>
+
+    <main class="window" id="app-window" aria-label="Minesweeper window">
       <header class="title-bar">
         <div class="title-group">
           <span class="app-icon" aria-hidden="true">
@@ -30,10 +48,16 @@
           </span>
           <span class="title-text">Minesweeper</span>
         </div>
-        <div class="window-controls" aria-hidden="true">
-          <span class="window-control">_</span>
-          <span class="window-control">[]</span>
-          <span class="window-control">X</span>
+        <div class="window-controls">
+          <button class="window-control" id="window-minimize" type="button" aria-label="Minimize">
+            _
+          </button>
+          <button class="window-control" id="window-maximize" type="button" aria-label="Maximize">
+            []
+          </button>
+          <button class="window-control" id="window-close" type="button" aria-label="Close">
+            X
+          </button>
         </div>
       </header>
 
@@ -95,6 +119,17 @@
         <p>Right click cycles flag, question mark, and clear.</p>
         <p>Click a revealed number to chord once the surrounding flags match it.</p>
         <p>The playable field follows the Strait of Hormuz and nearby water.</p>
+        <p class="help-credit">
+          Made by
+          <a
+            class="help-link"
+            href="https://x.com/salexashenko"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Sergey Alexashenko
+          </a>
+        </p>
         <button class="dialog-button" type="submit">OK</button>
       </form>
     </dialog>
