@@ -563,6 +563,13 @@ function handleBoardPointerUp(event) {
   const row = Number(cellEl.dataset.row);
   const col = Number(cellEl.dataset.col);
 
+  if (longPressTriggered) {
+    if (!state.gameOver) {
+      setFace("smile");
+    }
+    return;
+  }
+
   if (event.button === 0) {
     const cell = getCell(row, col);
 
@@ -692,8 +699,8 @@ function handleTouchEnd(event) {
   }
 
   if (longPressTriggered) {
-    longPressTriggered = false;
     event.preventDefault();
+    setTimeout(() => { longPressTriggered = false; }, 0);
     return;
   }
 
