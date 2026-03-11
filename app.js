@@ -662,12 +662,62 @@ function closeWindow() {
   desktopShortcutEl.focus();
 }
 
+let longPressTimer = null;
+let longPressTriggered = false;
+
+function handleTouchStart(event) {
+  if (state.gameOver) return;
+
+  const touch = event.touches[0];
+  const cellEl = document.elementFromPoint(touch.clientX, touch.clientY)?.closest(".cell");
+  if (!cellEl || cellEl.classList.contains("is-void")) return;
+
+  const row = Number(cellEl.dataset.row);
+  const col = Number(cellEl.dataset.col);
+
+  longPressTriggered = false;
+  longPressTimer = setTimeout(() => {
+    longPressTriggered = true;
+    cycleMark(row, col);
+    if (!state.gameOver) setFace("smile");
+  }, 400);
+
+  setFace("surprised");
+}
+
+function handleTouchEnd(event) {
+  if (longPressTimer) {
+    clearTimeout(longPressTimer);
+    longPressTimer = null;
+  }
+
+  if (longPressTriggered) {
+    longPressTriggered = false;
+    event.preventDefault();
+    return;
+  }
+
+  if (!state.gameOver) setFace("smile");
+}
+
+function handleTouchCancel() {
+  if (longPressTimer) {
+    clearTimeout(longPressTimer);
+    longPressTimer = null;
+  }
+  longPressTriggered = false;
+  if (!state.gameOver) setFace("smile");
+}
+
 boardEl.addEventListener("contextmenu", (event) => {
   event.preventDefault();
 });
 
 boardEl.addEventListener("pointerdown", handleBoardPointerDown);
 boardEl.addEventListener("pointerup", handleBoardPointerUp);
+boardEl.addEventListener("touchstart", handleTouchStart, { passive: true });
+boardEl.addEventListener("touchend", handleTouchEnd);
+boardEl.addEventListener("touchcancel", handleTouchCancel);
 
 window.addEventListener("pointerup", () => {
   if (!state.gameOver && state.face === "surprised") {
